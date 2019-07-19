@@ -1,4 +1,4 @@
-package beginner
+package abc
 
 import java.lang.IllegalArgumentException
 import java.util.*
