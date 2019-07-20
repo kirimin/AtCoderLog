@@ -9,3 +9,6 @@ kirimin-chan challenging to solving AtCoder's past problems, And sometimes strea
 
 If you are curious that, let chack this YouTube channel.
 https://www.youtube.com/channel/UCqN87Ye4TNLB04EFhxJ0L5w
+
+## Solved problem list
+[AtCoder Problems kirimin](https://kenkoooo.com/atcoder/#/table/kirimin)
