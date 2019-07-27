@@ -7,11 +7,13 @@ fun main(args : Array<String>) {
     val a = sc.nextInt()
     val op = sc.next()
     val b = sc.nextInt()
+    println(problem50a(a, op, b))
+}
 
-    val output = when (op) {
+fun problem50a(a: Int, op: String, b: Int): Int {
+    return when (op) {
         "+" -> a + b
         "-" -> a - b
         else -> throw IllegalArgumentException()
     }
-    println(output)
 }
