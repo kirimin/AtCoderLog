@@ -1,51 +1,56 @@
 import abc.problem54b
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 class TestOf054 {
 
     @Test
     fun testOf_054_a() {
-        Assert.assertEquals(abc.problem54a(8, 6), "Alice")
-        Assert.assertEquals(abc.problem54a(1, 1), "Draw")
-        Assert.assertEquals(abc.problem54a(13, 1), "Bob")
+        assertEquals("Alice", abc.problem54a(8, 6))
+        assertEquals("Draw", abc.problem54a(1, 1))
+        assertEquals("Bob", abc.problem54a(13, 1))
     }
 
     @Test
     fun testOf_054_b() {
-        Assert.assertEquals(
+        assertEquals(
+            "Yes",
             problem54b(
                 aList = listOf("#.#", ".#.", "#.#"),
                 bList = listOf("#.", ".#")
-            ), "Yes"
+            )
         )
 
-        Assert.assertEquals(
+        assertEquals(
+            "No",
             problem54b(
                 aList = listOf("....", "....", "....", "...."),
                 bList = listOf("#")
-            ), "No"
+            )
         )
 
-        Assert.assertEquals(
+        assertEquals(
+            "Yes",
             problem54b(
                 aList = listOf("....", "....", "....", "..##"),
                 bList = listOf("##")
-            ), "Yes"
+            )
         )
 
-        Assert.assertEquals(
+        assertEquals(
+            "Yes",
             problem54b(
                 aList = listOf("....", "....", "....", ".##."),
                 bList = listOf("##")
-            ), "Yes"
+            )
         )
 
-        Assert.assertEquals(
+        assertEquals(
+            "Yes",
             problem54b(
                 aList = listOf("....", "....", "....", "##.."),
                 bList = listOf("##")
-            ), "Yes"
+            )
         )
     }
 }

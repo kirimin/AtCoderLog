@@ -1,10 +1,10 @@
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 class TestOf050 {
 
     @Test
     fun testOf_050_a() {
-        Assert.assertEquals(abc.problem50a(1, "+", 2), 3)
+        assertEquals(3, abc.problem50a(1, "+", 2))
     }
 }
