@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class TestOf135 {
 
@@ -10,12 +12,13 @@ class TestOf135 {
         assertEquals("YES", abc.problem135b(7, listOf(1, 2, 3, 4, 5, 6, 7)))
     }
 
-    @Test
-    fun testOf_135_c() {
-        assertEquals(9, abc.problem135c(listOf(3, 5, 2), listOf(4, 5)))
-        assertEquals(22, abc.problem135c(listOf(5, 6, 3, 8), listOf(5, 100, 8)))
-        assertEquals(101, abc.problem135c(listOf(1, 100, 1), listOf(1, 100)))
-        assertEquals(101, abc.problem135c(listOf(1, 1, 100), listOf(1, 100)))
-        assertEquals(3, abc.problem135c(listOf(1, 1, 100), listOf(100, 1)))
+    @ParameterizedTest
+    @CsvSource(
+        "2, '3 5 2', '4 5', 9",
+        "3, '5 6 3 8', '5 100 8', 22",
+        "2, '100 1 1', '1 100', 3"
+    )
+    fun testOf_135_c(n: Long, a: String, b: String, expect: Long) {
+        assertEquals(expect, abc.problem135c(a.split(" ").map { it.toLong() }, b.split(" ").map { it.toLong() }))
     }
 }
