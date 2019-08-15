@@ -1,9 +1,16 @@
+import utilities.debugLog
 import java.util.*
 
-fun templates() {
+fun main(args : Array<String>) {
     val sc = Scanner(System.`in`)
     val n = sc.next().toLong()
-    val s = sc.next()
-    val aList = (0 until n).map { sc.next().toLong() }
-    val bList = (0..n).map { sc.next().toLong() }
+    val a = (0 until n).map { sc.next().toLong() }
+    println(problem000a(a))
+}
+
+fun problem000a(a: List<Long>): Long {
+    fun log(vararg values: Any) {
+        debugLog(values)
+    }
+    return 0L
 }
