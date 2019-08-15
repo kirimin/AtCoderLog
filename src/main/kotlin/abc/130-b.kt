@@ -1,5 +1,6 @@
 package abc
 
+import utilities.debugCount
 import utilities.debugLog
 import java.util.*
 
@@ -12,17 +13,15 @@ fun main(args: Array<String>) {
 }
 
 fun problem130b(n: Long, x: Long, l: List<Long>): Int {
-    fun log(vararg values: Any) {
-        debugLog(values)
-    }
     var d = 1L
     var count = 1
     (1..n.toInt()).forEach { i ->
         d = (d - 1) + l[i - 1]
-        log(d, count, d <= x)
+        debugLog(d, count, d <= x)
         if (d <= x) {
             count++
         }
+        debugCount()
         d++
     }
     return count

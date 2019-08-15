@@ -5,6 +5,7 @@ import abc.problem137c
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import utilities.countMap
 import utilities.toLongList
 
 class TestOf130 {
@@ -17,6 +18,7 @@ class TestOf130 {
         "1,1,10,1"
     )
     fun testOf_130_b(n: Long, x: Long, l: String, expected: Int) {
+        countMap = mutableMapOf()
         assertEquals(expected, (problem130b(n, x, toLongList(l))))
     }
 }
