@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import utilities.debugCountMap
+import utilities.toIntList
 
 class TestOf054 {
 
@@ -59,13 +61,11 @@ class TestOf054 {
 
     @ParameterizedTest
     @CsvSource(
-        "3, 3, '1 1 2', '3 2 3', 2",
-        "7, 7, '1 2 3 4 5 6', '3 7 4 5 6 6 7', 1"
+        "3, 3, '1 1 2', '2 3 3', 2",
+        "7, 7, '1 2 3 4 4 5 6', '3 7 4 5 6 6 7', 1"
     )
-    fun testOf_054_c(n: Int, m: Int, ab: String, expected: Int) {
-        val aList = ab.split(" ").map { it.toInt() }
-        val bList = ab.split(" ").map { it.toInt() }
-        println(aList)
-        assertEquals(expected, problem54c(n, m, aList, bList))
+    fun testOf_054_c(n: Int, m: Int, a: String, b: String, expected: Int) {
+        debugCountMap = mutableMapOf()
+        assertEquals(expected, problem54c(n, m, toIntList(a), toIntList(b)))
     }
 }
