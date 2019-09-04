@@ -2,40 +2,45 @@ package abc
 
 import java.util.*
 
+val mod052: Long = (Math.pow(10.0, 9.0) + 7).toLong()
+
 fun main(args: Array<String>) {
     val sc = Scanner(System.`in`)
     val n = sc.nextInt()
 
-    val primeFactorList = mutableListOf<Int>()
+    val p = mutableListOf<Long>()
     for (i in 1..n) {
-        primeFactorList += computePrimeFactorList(i)
+        p += computePrimeFactorList(i.toLong())
     }
-
     var count = 0
-    val primeFactorCountList = mutableListOf<Int>()
-    primeFactorList.sort()
-    primeFactorList.forEachIndexed { index, i ->
+    p.sort()
+    val pCount = mutableListOf<Int>()
+    p.forEachIndexed { index, i ->
         count++
-        if (index == primeFactorList.size - 1 || i != primeFactorList[index + 1]) {
-            primeFactorCountList.add(count)
+        if (index == p.size - 1 || i != p[index + 1]) {
+            pCount.add(count)
             count = 0
         }
     }
-    var divisorCount = 1L
-    primeFactorCountList.map { it + 1L }.forEach {
-        divisorCount = divisorCount * it % (1000000000 + 7)
+    var ans = 1L
+    pCount.map { it + 1L }.forEach {
+        ans = ans * it % mod052
     }
-    println(divisorCount)
+    println(ans)
 }
 
-fun computePrimeFactorList(n: Int): List<Int> {
-    val primeFactorList = mutableListOf<Int>()
+/**
+ * 素因数分解
+ * 対象の値が1になるまで素数で順番に割っていき割った数を列挙する
+ */
+fun computePrimeFactorList(n: Long): List<Long> {
+    val p = mutableListOf<Long>()
     var primeFactor = n
     for (i in 2..n) {
-        while (primeFactor % i == 0) {
+        while (primeFactor % i == 0L) {
             primeFactor /= i
-            primeFactorList.add(i)
+            p.add(i)
         }
     }
-    return primeFactorList
+    return p
 }
