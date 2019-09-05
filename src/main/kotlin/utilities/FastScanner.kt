@@ -1,9 +1,11 @@
 package utilities
 
 import java.io.IOException
-import java.io.InputStream
 import java.util.NoSuchElementException
 
+/***
+ * from https://qiita.com/p_shiki37/items/a0f6aac33bf60f5f65e4
+ */
 class FastScanner {
     private val `in` = System.`in`
     private val buffer = ByteArray(1024)
@@ -32,7 +34,7 @@ class FastScanner {
     }
 
     private fun isPrintableChar(c: Int): Boolean {
-        return 33 <= c && c <= 126
+        return c in 33..126
     }
 
     operator fun hasNext(): Boolean {
