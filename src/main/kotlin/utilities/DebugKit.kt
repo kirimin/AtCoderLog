@@ -1,5 +1,7 @@
 package utilities
 
+import java.text.NumberFormat
+
 fun debugLog(vararg values: Any) {
     println("debug： ${values.toList()}")
 }
@@ -12,4 +14,17 @@ fun debugCount(name: String = "count"): Int {
         return it
     }
     return 1
+}
+
+var speedMeasurementMap = mutableMapOf<String, Long>()
+fun debugSpeedStart(name: String = "speed") {
+    speedMeasurementMap[name] = System.nanoTime()
+}
+
+val numberFormat: NumberFormat = NumberFormat.getNumberInstance()
+fun debugSpeedEnd(name: String = "speed") {
+    debugLog(
+        name,
+        (numberFormat.format(System.nanoTime() / 1000 - speedMeasurementMap[name]!! / 1000)).toString() + "µs"
+    )
 }
