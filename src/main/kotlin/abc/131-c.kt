@@ -16,14 +16,16 @@ fun problem131c(a: Long, b: Long, c: Long, d: Long): Long {
         val rest = small % big
         return if (rest == 0L) big else computeGreatestCommonDivisor(big, rest)
     }
+    fun computeLeastCommonMultiple(small: Long, big: Long): Long {
+        return small * big / computeGreatestCommonDivisor(big, small)
+    }
     val bMultiple = b / c + b / d
     val aMultiple = (a - 1) / c + (a - 1) / d
-    val greatestCommon = if (c > d) {
-        computeGreatestCommonDivisor(c, d)
+    val leastCommon = if (c > d) {
+        computeLeastCommonMultiple(c, d)
     } else {
-        computeGreatestCommonDivisor(d, c)
+        computeLeastCommonMultiple(d, c)
     }
-    val leastCommon = c * d / greatestCommon
     var bAns = b - bMultiple
     bAns += b / leastCommon
     var aAns = (a - 1) - aMultiple

@@ -12,10 +12,20 @@ object MathSample {
      * @param big 2つの値の大きな方
      * @param small 2つの値の小さな方
      */
-    fun computeGreatestCommonDivisor(small: Long, big: Long): Long {
-        val rest = small % big
+    fun computeGreatestCommonDivisor(big: Long, small: Long): Long {
+        val rest = big % small
         return if (rest == 0L) big else computeGreatestCommonDivisor(big, rest)
     }
+
+    /**
+     * 最小公倍数
+     * @param big 2つの値の大きな方
+     * @param small 2つの値の小さな方
+     */
+    fun computeLeastCommonMultiple(small: Long, big: Long): Long {
+        return small * big / computeGreatestCommonDivisor(big, small)
+    }
+
 
     /**
      * 素因数分解
