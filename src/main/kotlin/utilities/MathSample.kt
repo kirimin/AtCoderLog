@@ -8,6 +8,16 @@ object MathSample {
     val mod: Long = (Math.pow(10.0, 9.0) + 7).toLong()
 
     /**
+     * 最大公約数
+     * @param big 2つの値の大きな方
+     * @param small 2つの値の小さな方
+     */
+    fun computeGreatestCommonDivisor(small: Long, big: Long): Long {
+        val rest = small % big
+        return if (rest == 0L) big else computeGreatestCommonDivisor(big, rest)
+    }
+
+    /**
      * 素因数分解
      * 対象の値が1になるまで素数で順番に割っていき割った数を列挙する
      */
