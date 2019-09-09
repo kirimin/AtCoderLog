@@ -3,29 +3,23 @@ package edpc
 import utilities.debugLog
 import java.util.*
 
-fun main(args: Array<String>) {
+fun main(args : Array<String>) {
     val sc = Scanner(System.`in`)
     val n = sc.nextInt()
-    val a = mutableListOf<MutableList<Int>>()
-    (0 until n).forEach { i ->
-        a.add(mutableListOf())
-        (0 until 3).forEach { j ->
-            a[i].add(sc.next().toInt())
-        }
-    }
-    println(edpcB(n, a))
+    val k = sc.nextInt()
+    val h = (0 until n).map { sc.next().toInt() }
+    println(edpcB(n, k, h))
 }
 
-fun edpcB(n: Int, a: MutableList<MutableList<Int>>): Int {
-    val dp = (0..n).map { (0 until 3).map { 0 }.toMutableList() }.toMutableList()
-    for (i in 0 until n) {
-        for (j in 0 until 3) {
-            for (k in 0 until 3) {
-                if (j != k) {
-                    dp[i + 1][k] = Math.max(dp[i + 1][k], dp[i][j] + a[i][k])
-                }
+fun edpcB(n: Int, k: Int, h: List<Int>): Int {
+    val dp = (0 until n).map { Integer.MAX_VALUE }.toMutableList()
+    dp[0] = 0
+    for (i in 1 until n) {
+        for (j in 1..k) {
+            if (i - j >= 0) {
+                dp[i] = Math.min(dp[i], dp[i - j] + Math.abs(h[i] - h[i - j]))
             }
         }
     }
-    return listOf(dp[n][0], dp[n][1], dp[n][2]).max()!!
+    return dp[n - 1]
 }
