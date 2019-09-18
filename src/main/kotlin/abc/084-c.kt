@@ -17,28 +17,13 @@ fun problem084c(n: Int, trains: List<SpecialTrain>): String {
         var time = 0
         for (j in i until n - 1) {
             val tn = trains[j]
-            time += if (time <= tn.s) {
-                tn.s - time + tn.c
-            } else {
-                var wait = tn.s
-                while (wait < time) {
-                    wait += tn.f
-                    when {
-                        wait + tn.f * 950000 < time -> wait += +tn.f * 950000
-                        wait + tn.f * 900000 < time -> wait += +tn.f * 900000
-                        wait + tn.f * 800000 < time -> wait += +tn.f * 800000
-                        wait + tn.f * 500000 < time -> wait += +tn.f * 500000
-                        wait + tn.f * 100000 < time -> wait += +tn.f * 100000
-                        wait + tn.f * 50000 < time -> wait += +tn.f * 50000
-                        wait + tn.f * 10000 < time -> wait += +tn.f * 10000
-                        wait + tn.f * 5000 < time -> wait += +tn.f * 5000
-                        wait + tn.f * 1000 < time -> wait += +tn.f * 1000
-                        wait + tn.f * 500 < time -> wait += +tn.f * 500
-                        wait + tn.f * 100 < time -> wait += +tn.f * 100
-                    }
+            when {
+                time < tn.s -> time = tn.s
+                time % tn.f == 0 -> {
                 }
-                wait % time + tn.c
+                else -> time = time + tn.f - time % tn.f
             }
+            time += tn.c
         }
         ans.add(time)
     }
