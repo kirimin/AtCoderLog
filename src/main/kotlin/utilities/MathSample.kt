@@ -88,6 +88,6 @@ object MathSample {
      * 階乗を計算する
      */
     fun computeFactorial(n: Long): Long {
-        return (1..n).reduce { acc, l -> acc * l }
+        return (1..n).toList().reduce { acc, l -> acc * l }
     }
 }
