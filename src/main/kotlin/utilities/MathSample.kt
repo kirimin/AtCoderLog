@@ -1,5 +1,7 @@
 package utilities
 
+import java.util.Comparator
+
 object MathSample {
 
     /***
@@ -89,5 +91,14 @@ object MathSample {
      */
     fun computeFactorial(n: Long): Long {
         return (1..n).toList().reduce { acc, l -> acc * l }
+    }
+
+    /**
+     * binarySearchで同値を識別するために使用するComparator
+     */
+    class LowerBoundComparator<T : Comparable<T>> : Comparator<T> {
+        override fun compare(x: T, y: T): Int {
+            return if (x >= y) 1 else -1
+        }
     }
 }
