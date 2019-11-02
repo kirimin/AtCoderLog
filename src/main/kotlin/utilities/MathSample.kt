@@ -49,19 +49,11 @@ object MathSample {
      * 約数を数える
      */
     fun countDivisor(n: Long): Long {
-        val p = computePrimeFactorList(n)
-        debugLog(p)
-        var count = 1
-        var ans = 0L
-        for (i in p.indices) {
-            count++
-            val pi = p[i]
-            if (i >= p.size - 1 || p[i + 1] != pi) {
-                ans += count
-                count = 1
-            }
+        var count = 0L
+        for (i in 1..n) {
+            if (n % i == 0L) count++
         }
-        return ans
+        return count
     }
 
     /**
