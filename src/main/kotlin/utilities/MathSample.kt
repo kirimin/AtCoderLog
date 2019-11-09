@@ -86,6 +86,23 @@ object MathSample {
     }
 
     /**
+     * 文字列から連続した文字の個数のリストに変換する
+     */
+    fun collectSameChar(string: String): List<Pair<Char, Int>> {
+        val list = mutableListOf<Pair<Char, Int>>()
+        var prev = ' '
+        string.forEach {
+            if (prev != it) {
+                list.add(it to 1)
+            } else {
+                list[list.size - 1] = it to list.last().second + 1
+            }
+            prev = it
+        }
+        return list
+    }
+
+    /**
      * binarySearchで同値を識別するために使用するComparator
      */
     class LowerBoundComparator<T : Comparable<T>> : Comparator<T> {
