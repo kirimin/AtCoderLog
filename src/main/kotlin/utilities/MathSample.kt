@@ -103,6 +103,38 @@ object MathSample {
     }
 
     /**
+     * 素数判定
+     */
+    fun isPrime(num: Int): Boolean {
+        if (num < 2) return false
+        if (num == 2) return true
+        if (num % 2 == 0) return false
+
+        val sqrtNum = Math.sqrt(num.toDouble()).toInt()
+        for (i in 3..sqrtNum step 2) {
+            if (num % i == 0) return false
+        }
+        return true
+    }
+
+    /**
+     * エラトステネスのふるい。1からnまでの素数を列挙する
+     */
+    fun sieveOfEratosthenes(n: Int): List<Int> {
+        val primes = (2..n).toMutableList()
+        for (i in 2..n) {
+            debugLog("isPrime($i)", isPrime(i))
+            if (isPrime(i)) {
+                for (j in i * 2..n step i) {
+                    debugLog("j", j)
+                    primes.remove(j)
+                }
+            }
+        }
+        return primes
+    }
+
+    /**
      * binarySearchで同値を識別するために使用するComparator
      */
     class LowerBoundComparator<T : Comparable<T>> : Comparator<T> {
