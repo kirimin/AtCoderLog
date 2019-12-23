@@ -16,7 +16,7 @@ object MathSample {
      */
     fun computeGreatestCommonDivisor(big: Long, small: Long): Long {
         val rest = big % small
-        return if (rest == 0L) big else computeGreatestCommonDivisor(big, rest)
+        return if (rest == 0L) small else computeGreatestCommonDivisor(small, rest)
     }
 
     /**
@@ -27,8 +27,6 @@ object MathSample {
     fun computeLeastCommonMultiple(small: Long, big: Long): Long {
         return small * big / computeGreatestCommonDivisor(big, small)
     }
-
-
     /**
      * 素因数分解
      * 対象の値が1になるまで素数で順番に割っていき割った数を列挙する
