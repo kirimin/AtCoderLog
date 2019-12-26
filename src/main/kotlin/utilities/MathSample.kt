@@ -27,6 +27,7 @@ object MathSample {
     fun computeLeastCommonMultiple(small: Long, big: Long): Long {
         return small * big / computeGreatestCommonDivisor(big, small)
     }
+
     /**
      * 素因数分解
      * 対象の値が1になるまで素数で順番に割っていき割った数を列挙する
@@ -130,6 +131,19 @@ object MathSample {
             }
         }
         return primes
+    }
+
+    /**
+     * 何回割り切れるか
+     */
+    fun log(num: Long, base: Long): Long {
+        var count = 0L
+        var tmp = num
+        while (tmp % 2 == 0L) {
+            tmp /= 2
+            count++
+        }
+        return count
     }
 
     /**
