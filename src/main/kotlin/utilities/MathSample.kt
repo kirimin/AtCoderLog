@@ -1,6 +1,7 @@
 package utilities
 
-import java.util.Comparator
+import java.util.*
+
 
 object MathSample {
 
@@ -144,6 +145,29 @@ object MathSample {
             count++
         }
         return count
+    }
+
+    /**
+     * 辞書順で順列の次の組み合わせにarrayを書き換える
+     */
+    fun nextPermutation(array: IntArray): Boolean {
+        var i = array.size - 1
+        while (i > 0 && array[i - 1] >= array[i]) i--
+        if (i <= 0) return false
+        var j = array.size - 1
+        while (array[j] <= array[i - 1]) j--
+        var temp = array[i - 1]
+        array[i - 1] = array[j]
+        array[j] = temp
+        j = array.size - 1
+        while (i < j) {
+            temp = array[i]
+            array[i] = array[j]
+            array[j] = temp
+            i++
+            j--
+        }
+        return true
     }
 
     /**

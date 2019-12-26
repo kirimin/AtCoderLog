@@ -1,6 +1,5 @@
 package abc
 
-import utilities.debugLog
 import java.util.*
 
 fun main(args: Array<String>) {
@@ -11,143 +10,43 @@ fun main(args: Array<String>) {
 }
 
 fun problem145c(n: Int, xy: List<Pair<Double, Double>>): Double {
-    val distance = fun(i: Int, j: Int) =
-        Math.sqrt((Math.pow(xy[i].first - xy[j].first, 2.0) + Math.pow(xy[i].second - xy[j].second, 2.0)))
-    val list = mutableListOf<Double>()
-    when {
-        n == 2 -> {
-            for (a in 0 until n) {
-                for (b in 0 until n) {
-                    if (a == b) continue
-                    list.add(distance(a, b))
-                }
-            }
+    /**
+     * 辞書順で順列の次の組み合わせにarrayを書き換える
+     */
+    fun nextPermutation(array: IntArray): Boolean {
+        var i = array.size - 1
+        while (i > 0 && array[i - 1] >= array[i]) i--
+        if (i <= 0) return false
+        var j = array.size - 1
+        while (array[j] <= array[i - 1]) j--
+        var temp = array[i - 1]
+        array[i - 1] = array[j]
+        array[j] = temp
+        // Reverse the suffix
+        j = array.size - 1
+        while (i < j) {
+            temp = array[i]
+            array[i] = array[j]
+            array[j] = temp
+            i++
+            j--
         }
-        n == 3 -> {
-            for (a in 0 until n) {
-                for (b in 0 until n) {
-                    for (c in 0 until n) {
-                        if (listOf(a, b, c).distinct().size != 3) continue
-                        list.add(distance(a, b) + distance(b, c))
-                    }
-                }
-            }
-        }
-        n == 4 -> {
-            for (a in 0 until n) {
-                for (b in 0 until n) {
-                    if (a == b) continue
-                    for (c in 0 until n) {
-                        if (b == c) continue
-                        for (d in 0 until n) {
-                            if (c == d) continue
-                            list.add(distance(a, b) + distance(b, c) + distance(c, d))
-                        }
-                    }
-                }
-            }
-        }
-        n == 5 -> {
-            for (a in 0 until n) {
-                for (b in 0 until n) {
-                    if (a == b) continue
-                    for (c in 0 until n) {
-                        if (b == c) continue
-                        for (d in 0 until n) {
-                            if (c == d) continue
-                            for (e in 0 until n) {
-                                if (d == e) continue
-                                list.add(distance(a, b) + distance(b, c) + distance(c, d) + distance(d, e))
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        n == 6 -> {
-            for (a in 0 until n) {
-                for (b in 0 until n) {
-                    if (a == b) continue
-                    for (c in 0 until n) {
-                        if (b == c) continue
-                        for (d in 0 until n) {
-                            if (c == d) continue
-                            for (e in 0 until n) {
-                                if (d == e) continue
-                                for (f in 0 until n) {
-                                    if (e == f) continue
-                                    list.add(
-                                        distance(a, b) + distance(b, c) + distance(c, d) + distance(
-                                            d,
-                                            e
-                                        ) + distance(e, f)
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        n == 7 -> {
-            for (a in 0 until n) {
-                for (b in 0 until n) {
-                    if (a == b) continue
-                    for (c in 0 until n) {
-                        if (b == c) continue
-                        for (d in 0 until n) {
-                            if (c == d) continue
-                            for (e in 0 until n) {
-                                if (d == e) continue
-                                for (f in 0 until n) {
-                                    if (e == f) continue
-                                    for (g in 0 until n) {
-                                        if (f == g) continue
-                                        list.add(
-                                            distance(a, b) + distance(b, c) + distance(c, d) + distance(
-                                                d,
-                                                e
-                                            ) + distance(e, f) + distance(f, g)
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        n == 8 -> {
-            for (a in 0 until n) {
-                for (b in 0 until n) {
-                    if (a == b) continue
-                    for (c in 0 until n) {
-                        if (b == c) continue
-                        for (d in 0 until n) {
-                            if (c == d) continue
-                            for (e in 0 until n) {
-                                if (d == e) continue
-                                for (f in 0 until n) {
-                                    if (e == f) continue
-                                    for (g in 0 until n) {
-                                        if (f == g) continue
-                                        for (h in 0 until n) {
-                                            if (g == h) continue
-                                            list.add(
-                                                distance(a, b) + distance(b, c) + distance(c, d) + distance(
-                                                    d,
-                                                    e
-                                                ) + distance(e, f) + distance(f, g) + distance(g, h)
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return true
     }
-    return list.average()
+
+    val intArray = (0 until n).toList().toIntArray()
+    val sum = mutableListOf<Double>()
+    var last = true
+    while (last) {
+        val list = DoubleArray(n) { 0.0 }
+        for (i in 1 until n) {
+            list[intArray[i - 1]] = Math.sqrt(
+                (Math.pow(Math.abs(xy[intArray[i - 1]].first - xy[intArray[i]].first), 2.0)) +
+                (Math.pow(Math.abs(xy[intArray[i - 1]].second - xy[intArray[i]].second), 2.0))
+            )
+        }
+        sum.add(list.sum())
+        last = nextPermutation(intArray)
+    }
+    return sum.average()
 }
