@@ -140,8 +140,8 @@ object MathSample {
     fun log(num: Long, base: Long): Long {
         var count = 0L
         var tmp = num
-        while (tmp % 2 == 0L) {
-            tmp /= 2
+        while (tmp % base == 0L) {
+            tmp /= base
             count++
         }
         return count
