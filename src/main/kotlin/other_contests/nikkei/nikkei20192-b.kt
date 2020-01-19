@@ -1,6 +1,5 @@
-package other_contests.nikkei2019
+package other_contests.nikkei
 
-import utilities.debugLog
 import java.util.*
 
 fun main(args: Array<String>) {

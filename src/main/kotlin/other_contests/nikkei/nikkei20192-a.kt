@@ -1,4 +1,4 @@
-package other_contests.nikkei2019
+package other_contests.nikkei
 
 import java.util.*
 
