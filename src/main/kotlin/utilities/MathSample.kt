@@ -171,6 +171,21 @@ object MathSample {
     }
 
     /**
+     * 整数を「どのアイテムを選ぶのか」を表すListに変換
+     * @param bit 集合を表す整数
+     * @param n 何個のものについて考えているか
+     */
+    fun integerToList(bit: Int, n:Int): List<Int> {
+        val s = mutableListOf<Int>()
+        for(i in 0 until n) {
+            if (bit and (1 shl i) != 0) {
+                s.add(i)
+            }
+        }
+        return s
+    }
+
+    /**
      * binarySearchで同値を識別するために使用するComparator
      */
     class LowerBoundComparator<T : Comparable<T>> : Comparator<T> {
