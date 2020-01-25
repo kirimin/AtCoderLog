@@ -174,6 +174,7 @@ object MathSample {
      * 整数を「どのアイテムを選ぶのか」を表すListに変換
      * @param bit 集合を表す整数
      * @param n 何個のものについて考えているか
+     * @return n個の中から選んだものの番号のみが含まれるList
      */
     fun integerToList(bit: Int, n:Int): List<Int> {
         val s = mutableListOf<Int>()
