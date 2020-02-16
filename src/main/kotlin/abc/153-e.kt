@@ -7,10 +7,10 @@ fun main(args: Array<String>) {
     val h = sc.nextInt()
     val n = sc.nextInt()
     val ab = (0 until n).map { sc.next().toInt() to sc.next().toInt() }
-    println(problem154e(h, n, ab))
+    println(problem153e(h, n, ab))
 }
 
-fun problem154e(h: Int, n: Int, ab: List<Pair<Int, Int>>): Int {
+fun problem153e(h: Int, n: Int, ab: List<Pair<Int, Int>>): Int {
     val pow = Math.pow(10.0, 9.0).toInt()
     val dp = Array(n + 1) { IntArray(h + 1) { pow } }
     dp[0][0] = 0;
