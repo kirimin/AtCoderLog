@@ -148,6 +148,13 @@ object MathSample {
     }
 
     /**
+     * 組み合わせ
+     */
+    fun nCr(n: Long, r:Long): Long {
+        return (1..n).reduce { acc, l -> acc * l } / ((1..r).reduce { acc, l -> acc * l } * (1..n - r).reduce { acc, l -> acc * l })
+    }
+
+    /**
      * 辞書順で順列の次の組み合わせにarrayを書き換える
      */
     fun nextPermutation(array: IntArray): Boolean {
