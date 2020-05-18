@@ -150,8 +150,19 @@ object MathSample {
     /**
      * 組み合わせ
      */
-    fun nCr(n: Long, r:Long): Long {
-        return (1..n).reduce { acc, l -> acc * l } / ((1..r).reduce { acc, l -> acc * l } * (1..n - r).reduce { acc, l -> acc * l })
+    fun nCr(n: Int, r:Int): Int {
+        if (r == 0 || r == n)
+            return (1);
+        else if (r == 1)
+            return (n);
+        return (nCr(n - 1, r - 1) + nCr(n - 1, r));
+    }
+
+    /**
+     * N個の中から2個を選ぶ公式
+     */
+    fun take2ByN(n: Int): Int {
+        return n * (n - 1) / 2
     }
 
     /**
