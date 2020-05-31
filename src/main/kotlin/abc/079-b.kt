@@ -1,15 +1,14 @@
 package abc
 
-import utilities.debugLog
 import java.util.*
 
 fun main(args: Array<String>) {
     val sc = Scanner(System.`in`)
     val n = sc.nextInt()
-    println(problem097b(n))
+    println(problem79b(n))
 }
 
-fun problem097b(n: Int): Long {
+fun problem79b(n: Int): Long {
     val array = LongArray(n + 1) { 0 }
     array[0] = 2
     array[1] = 1
