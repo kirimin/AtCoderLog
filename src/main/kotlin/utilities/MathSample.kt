@@ -31,29 +31,21 @@ object MathSample {
 
     /**
      * 素因数分解
-     * 対象の値が1になるまで素数で順番に割っていき割った数を列挙する
      */
-    fun computePrimeFactorList(n: Long): List<Long> {
-        val p = mutableListOf<Long>()
+    fun computePrimeFactorList(n: Long): List<Pair<Long, Long>> {
+        val p = mutableListOf<Pair<Long, Long>>()
         var primeFactor = n
-        for (i in 2..n) {
+        for (i in 2..(Math.sqrt(n.toDouble()) + 1).toLong()) {
+            if (primeFactor % i != 0L) continue
+            var count = 0L
             while (primeFactor % i == 0L) {
                 primeFactor /= i
-                p.add(i)
+                count++
             }
+            p.add(i to count)
         }
+        if (primeFactor != 1L) p.add(primeFactor to 1L)
         return p
-    }
-
-    /**
-     * 約数を数える
-     */
-    fun countDivisor(n: Long): Long {
-        var count = 0L
-        for (i in 1..n) {
-            if (n % i == 0L) count++
-        }
-        return count
     }
 
     /**
@@ -63,16 +55,10 @@ object MathSample {
     fun computeDivisorSum(n: Long): Long {
         val p = computePrimeFactorList(n)
         var ans = 1L
-        var nSum = 0
-        var count = 0
         for (i in p.indices) {
-            count++
             val pi = p[i]
-            nSum += Math.pow(pi.toDouble(), count.toDouble()).toInt()
-            if (i >= p.size - 1 || p[i + 1] != pi) {
-                ans *= (nSum + 1)
-                count = 0
-                nSum = 0
+            for (j in 0..pi.second) {
+                ans += Math.pow(pi.first.toDouble(), j.toDouble()).toLong()
             }
         }
         return ans
@@ -103,6 +89,33 @@ object MathSample {
     }
 
     /**
+     * nに含まれる約数列挙
+     */
+    fun enumDivisors(n: Long): List<Long> {
+        val list = mutableListOf<Long>()
+        for (i in 1..Math.sqrt(n.toDouble()).toLong()) {
+            if (n % i == 0L) {
+                list.add(i)
+                if (n / i != i) list.add(n / i)
+            }
+        }
+        return list.sorted()
+    }
+
+    /**
+     * 1からNまでの整数に含まれる約数の数の合計を求める
+     */
+    fun divisorsCounts(n: Long): Long {
+        var ans = 0L
+        for (i in 1..n) {
+            for (j in i..n step i) {
+                ans++
+            }
+        }
+        return ans
+    }
+
+    /**
      * 素数判定
      */
     fun isPrime(num: Int): Boolean {
@@ -123,10 +136,8 @@ object MathSample {
     fun sieveOfEratosthenes(n: Int): List<Int> {
         val primes = (2..n).toMutableList()
         for (i in 2..n) {
-            debugLog("isPrime($i)", isPrime(i))
             if (isPrime(i)) {
                 for (j in i * 2..n step i) {
-                    debugLog("j", j)
                     primes.remove(j)
                 }
             }
@@ -150,7 +161,7 @@ object MathSample {
     /**
      * 組み合わせ
      */
-    fun nCr(n: Int, r:Int): Int {
+    fun nCr(n: Int, r: Int): Int {
         if (r == 0 || r == n)
             return (1);
         else if (r == 1)
@@ -194,9 +205,9 @@ object MathSample {
      * @param n 何個のものについて考えているか
      * @return n個の中から選んだものの番号のみが含まれるList
      */
-    fun integerToList(bit: Int, n:Int): List<Int> {
+    fun integerToList(bit: Int, n: Int): List<Int> {
         val s = mutableListOf<Int>()
-        for(i in 0 until n) {
+        for (i in 0 until n) {
             if (bit and (1 shl i) != 0) {
                 s.add(i)
             }
@@ -205,11 +216,34 @@ object MathSample {
     }
 
     /**
-     * binarySearchで同値を識別するために使用するComparator
+     * 二分探索を使いkeyに一番近いkey未満のindex + 1を返す
      */
-    class LowerBoundComparator<T : Comparable<T>> : Comparator<T> {
+    fun lowerBound(list: List<Long>, key: Long): Int {
+        var ng = -1
+        var ok = list.size
+
+        while (ok - ng > 1) {
+            val mid = (ok + ng) / 2
+            if (list[mid] >= key) ok = mid else ng = mid
+        }
+        return ok
+    }
+
+    /**
+     * 指定した値以上の要素が初めて出現する場所を取得
+     */
+    internal class LowerBoundComparator<T : Comparable<T>?> : Comparator<T> {
         override fun compare(x: T, y: T): Int {
-            return if (x >= y) 1 else -1
+            return if (x!!.compareTo(y) >= 0) 1 else -1
+        }
+    }
+
+    /**
+     * 指定した値より大きい要素が初めて出現する場所を取得
+     */
+    internal class UpperBoundComparator<T : Comparable<T>?> : Comparator<T> {
+        override fun compare(x: T, y: T): Int {
+            return if (x!!.compareTo(y) > 0) 1 else -1
         }
     }
 }
