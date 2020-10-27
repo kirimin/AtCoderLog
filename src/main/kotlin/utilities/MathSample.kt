@@ -11,6 +11,22 @@ object MathSample {
     val mod: Long = (Math.pow(10.0, 9.0) + 7).toLong()
 
     /**
+     * Doubleを使わないpow
+     */
+    fun longPow(a: Long, b: Long, needMod: Boolean = false): Long {
+        /***
+         * 10^9 + 7
+         */
+        val mod: Long = (Math.pow(10.0, 9.0) + 7).toLong()
+        var ans = 1L
+        for (i in 0 until b) {
+            ans *= a
+            if (needMod) ans %= mod
+        }
+        return ans
+    }
+
+    /**
      * 最大公約数
      * @param big 2つの値の大きな方
      * @param small 2つの値の小さな方
