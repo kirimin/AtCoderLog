@@ -1,7 +1,5 @@
 package abc
 
-import utilities.debugCount
-import utilities.debugLog
 import java.util.*
 
 fun main(args: Array<String>) {
@@ -11,17 +9,34 @@ fun main(args: Array<String>) {
 }
 
 fun problem178c(n: Long): Long {
-    /***
-     * 10^9 + 7
-     */
-    val mod: Long = (Math.pow(10.0, 9.0) + 7).toLong()
+    class ModInt(value: Long) {
 
-    val pow9 = longPow(9, n, true)
-    val pow8 = longPow(8, n, true)
-    return ((longPow(10, n, true) + pow8 - (pow9 * 2 % mod)) + mod) % mod
+        /***
+         * 10^9 + 7
+         */
+        val mod: Long = (Math.pow(10.0, 9.0) + 7).toLong()
+
+        val value = ((value % mod) + mod) % mod
+
+        operator fun plus(other: ModInt): ModInt = ModInt(((value + other.value) % mod + mod) % mod)
+
+        operator fun minus(other: ModInt): ModInt = ModInt(((value - other.value) % mod + mod) % mod)
+
+        operator fun times(other: ModInt): ModInt = ModInt(((value * other.value) % mod + mod) % mod)
+
+        operator fun div(other: ModInt): ModInt = ModInt(((value / other.value) % mod + mod) % mod)
+    }
+
+    fun Long.toModInt() = ModInt(this)
+
+
+    val pow9 = longPow(9, n, true).toModInt()
+    val pow8 = longPow(8, n, true).toModInt()
+    return (longPow(10, n, true).toModInt() + pow8 - (pow9 * (2L).toModInt())).value
 }
 
 fun longPow(a: Long, b: Long, needMod: Boolean = false): Long {
+
     /***
      * 10^9 + 7
      */
