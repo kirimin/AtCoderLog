@@ -11,10 +11,17 @@ fun main(args: Array<String>) {
 fun problem110a(n: Long): Long {
     /**
      * 最大公約数
-     * @param big 2つの値の大きな方
-     * @param small 2つの値の小さな方
      */
-    fun computeGreatestCommonDivisor(big: Long, small: Long): Long {
+    fun computeGreatestCommonDivisor(a: Long, b: Long): Long {
+        val big: Long
+        val small: Long
+        if (a > b) {
+            big = a
+            small = b
+        } else {
+            small = a
+            big = b
+        }
         val rest = big % small
         return if (rest == 0L) small else computeGreatestCommonDivisor(small, rest)
     }
@@ -24,14 +31,26 @@ fun problem110a(n: Long): Long {
      * @param big 2つの値の大きな方
      * @param small 2つの値の小さな方
      */
-    fun computeLeastCommonMultiple(small: Long, big: Long): Long {
+    fun computeLeastCommonMultiple(a: Long, b: Long): Long {
+        val big: Long
+        val small: Long
+        if (a > b) {
+            big = a
+            small = b
+        } else {
+            small = a
+            big = b
+        }
         return small * big / computeGreatestCommonDivisor(big, small)
     }
 
-    var m = 2L
-    for (i in 3L..n) {
-        m = computeLeastCommonMultiple(m, i)
+    fun computeLeastCommonMultiple(list: List<Long>): Long {
+        var result = list[0]
+        for (i in 1 until list.size) {
+            result = computeLeastCommonMultiple(result, list[i])
+        }
+        return result
     }
 
-    return m + 1
+    return computeLeastCommonMultiple((2L..n).toList()) + 1
 }

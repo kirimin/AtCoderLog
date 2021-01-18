@@ -28,12 +28,27 @@ object MathSample {
 
     /**
      * 最大公約数
-     * @param big 2つの値の大きな方
-     * @param small 2つの値の小さな方
      */
-    fun computeGreatestCommonDivisor(big: Long, small: Long): Long {
+    fun computeGreatestCommonDivisor(a: Long, b: Long): Long {
+        val big: Long
+        val small: Long
+        if (a > b) {
+            big = a
+            small = b
+        } else {
+            small = a
+            big = b
+        }
         val rest = big % small
         return if (rest == 0L) small else computeGreatestCommonDivisor(small, rest)
+    }
+
+    fun computeGreatestCommonDivisor(list: List<Long>): Long {
+        var result = list[0]
+        for (i in 1 until list.size) {
+            result = computeGreatestCommonDivisor(result, list[i])
+        }
+        return result
     }
 
     /**
@@ -41,8 +56,25 @@ object MathSample {
      * @param big 2つの値の大きな方
      * @param small 2つの値の小さな方
      */
-    fun computeLeastCommonMultiple(small: Long, big: Long): Long {
+    fun computeLeastCommonMultiple(a: Long, b: Long): Long {
+        val big: Long
+        val small: Long
+        if (a > b) {
+            big = a
+            small = b
+        } else {
+            small = a
+            big = b
+        }
         return small * big / computeGreatestCommonDivisor(big, small)
+    }
+
+    fun computeLeastCommonMultiple(list: List<Long>): Long {
+        var result = list[0]
+        for (i in 1 until list.size) {
+            result = computeLeastCommonMultiple(result, list[i])
+        }
+        return result
     }
 
     /**
@@ -261,5 +293,48 @@ object MathSample {
         override fun compare(x: T, y: T): Int {
             return if (x!!.compareTo(y) > 0) 1 else -1
         }
+    }
+
+    fun dpsSample(h: Int, w: Int, a: List<CharArray>): Int {
+        val seen = Array(h) { Array(w) { "_" } }
+        val deque = ArrayDeque<Pair<Int, Int>>()
+        seen[0][0] = "0"
+        deque.offer(0 to 0)
+        while (deque.isNotEmpty()) {
+            val v = deque.poll()
+            fun searchPosition(yOffset: Int = 0, xOffset: Int = 0) {
+                val y = v.first + yOffset
+                val x = v.second + xOffset
+                if (v.second - 1 >= 0 && a[y][x] != '#' && seen[y][x] == "_") {
+                    seen[y][x] = (seen[v.first][v.second].toInt() + 1).toString()
+                    deque.offer(y to x)
+                }
+            }
+            // left
+            if (v.second - 1 >= 0) {
+                searchPosition(xOffset = -1)
+            }
+            // right
+            if (v.second + 1 < w) {
+                searchPosition(xOffset = 1)
+            }
+            // top
+            if (v.first - 1 >= 0) {
+                searchPosition(yOffset = -1)
+            }
+            // bottom
+            if (v.first + 1 < h) {
+                searchPosition(xOffset = 1)
+            }
+        }
+        if (seen[h - 1][w - 1] == "_") return -1
+        var whiteCount = -1
+        for (i in 0 until a.size) {
+            for (j in 0 until a[i].size) {
+                if (a[i][j] != '#') whiteCount++
+            }
+        }
+        val minCost = seen[h - 1][w - 1]
+        return whiteCount - minCost.toInt()
     }
 }
