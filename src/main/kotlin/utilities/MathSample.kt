@@ -1,5 +1,7 @@
 package utilities
 
+import java.math.BigDecimal
+import java.math.MathContext
 import java.util.*
 
 
@@ -336,5 +338,27 @@ object MathSample {
         }
         val minCost = seen[h - 1][w - 1]
         return whiteCount - minCost.toInt()
+    }
+
+    /**
+     * 少数誤差回避sqrt
+     */
+    fun sqrt(a: BigDecimal, scale: Int): BigDecimal {
+        var x = BigDecimal(Math.sqrt(a.toDouble()), MathContext.DECIMAL64)
+        if (scale < 17) {
+            x = x.setScale(scale, BigDecimal.ROUND_HALF_EVEN)
+            return x
+        }
+        val b2 = BigDecimal(2)
+        var tempScale = 16
+        while (tempScale < scale) {
+            x = x.subtract(
+                x.multiply(x).subtract(a).divide(
+                    x.multiply(b2), scale, BigDecimal.ROUND_HALF_EVEN
+                )
+            )
+            tempScale *= 2
+        }
+        return x
     }
 }
