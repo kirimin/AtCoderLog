@@ -1,6 +1,5 @@
 package abc
 
-import utilities.debugLog
 import java.util.*
 
 fun main(args: Array<String>) {
@@ -11,22 +10,54 @@ fun main(args: Array<String>) {
 }
 
 fun problem206d(n: Int, a: List<Int>): Int {
-    var l = 0
-    var r = n - 1
-    var count = 0
-    val changedSet = mutableSetOf<String>()
-    val s = a.map { it.toString() }.toMutableList()
-    while (true) {
-        val al = s[l]
-        val ar = s[r]
-        if (al != ar && !(changedSet.contains(al) && changedSet.contains(ar))) {
-            changedSet.add(al)
-            changedSet.add(ar)
-            count++
+    class UnionFind(n: Int) {
+        val parent = IntArray(n) { -1 }
+
+        fun root(x: Int): Int {
+            if (parent[x] < 0) return x
+            parent[x] = root(parent[x])
+            return parent[x]
         }
-        l++
-        r--
-        if ((n % 2 == 0 && r - l <= 0) || (n % 2 != 0 && r - l <= 1)) break
+
+        fun isSameRoot(x: Int, y: Int) = root(x) == root(y)
+
+        fun merge(x: Int, y: Int) {
+            var xRoot = root(x)
+            var yRoot = root(y)
+            if (xRoot == yRoot) return
+            if (parent[xRoot] > parent[yRoot]) {
+                val tmp = xRoot
+                xRoot = yRoot
+                yRoot = tmp
+            }
+            parent[xRoot] += parent[yRoot]
+            parent[yRoot] = xRoot
+        }
+
+        fun groupSize(x: Int) = -parent[root(x)]
+
+        override fun toString(): String {
+            return parent.toString()
+        }
     }
-    return count
+
+    if (n == 1) return 0
+
+    val unionFind = UnionFind(a.max()!! + 1)
+    // グループを生成
+    for (i in 0 until n / 2) {
+        val l = a[i]
+        val r = a[n - 1 - i]
+        unionFind.merge(l, r)
+    }
+
+    val groupMap = mutableMapOf<Int, Int>()
+    for (i in 0 until n) {
+        if (groupMap[unionFind.root(a[i])] == null) {
+            groupMap[unionFind.root(a[i])] =
+                unionFind.groupSize(a[i]) - 1
+        }
+    }
+
+    return groupMap.toList().sumBy { it.second }
 }
