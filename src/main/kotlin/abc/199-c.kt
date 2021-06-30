@@ -1,6 +1,5 @@
 package abc
 
-import utilities.debugLog
 import java.util.*
 
 fun main(args: Array<String>) {
@@ -13,16 +12,40 @@ fun main(args: Array<String>) {
 }
 
 fun problem199c(n: Int, s: String, q: Int, tab: List<Triple<Int, Int, Int>>): String {
-    val list = s.toList()
+    val list = s.toMutableList()
+    var isSwaped = false
     for (i in 0 until q) {
-        val (t, a, b) = tab[i]
+        var (t, a, b) = tab[i]
         when (t) {
             1 -> {
-                Collections.swap(list, a - 1, b - 1)
+                if (isSwaped) {
+                    if (a <= list.size / 2) {
+                        a += (list.size) / 2
+                    } else {
+                        a -= (list.size) / 2
+                    }
+                    if (b > list.size / 2) {
+                        b -= (list.size) / 2
+                    } else {
+                        b += (list.size) / 2
+                    }
+                }
+                a--
+                b--
+                val tmp = list[a]
+                list[a] = list[b]
+                list[b] = tmp
+
             }
             2 -> {
+                isSwaped = !isSwaped
             }
         }
+    }
+    if (isSwaped) {
+        val right = list.take((list.size) / 2)
+        val left = list.takeLast(list.size / 2)
+        return (left + if (list.size % 2 != 0) listOf(list[list.size / 2 + 1]) else emptyList<Char>() + right).joinToString("")
     }
     return list.joinToString("")
 }

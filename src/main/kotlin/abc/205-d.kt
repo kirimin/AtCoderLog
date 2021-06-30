@@ -13,25 +13,30 @@ fun main(args: Array<String>) {
 }
 
 fun problem205d(n: Int, q: Int, a: List<Long>, k: List<Long>): String {
-    val ans = LongArray(q)
-    val kSorted = k.mapIndexed { index, l -> l to index }.sortedBy { it.first }
-    val memo = Array(q + 1) { 0 to 0 }
-    for (i in 0 until q) {
-        var (ki, index) = kSorted[i]
-        var count = 0
-        val (m1, m2) = memo[i]
-        ki += m2
-        for (j in m1 until n) {
-            val aj = a[j]
-            if (aj <= ki) {
-                ki++
-                count++
-                memo[i + 1] = j + 1 to count
-            } else {
-                break
-            }
+    fun lowerBound(list: LongArray, key: Long): Int {
+        var ng = -1
+        var ok = list.size
+
+        while (ok - ng > 1) {
+            val mid = (ok + ng) / 2
+            if (list[mid] >= key) ok = mid else ng = mid
         }
-        ans[index] = (ki)
+        return ok
+    }
+
+    val c = LongArray(n)
+    for (i in 0 until n) {
+        c[i] = a[i] - (i + 1)
+    }
+    val ans = LongArray(q)
+    for (i in 0 until q) {
+        val ki = k[i]
+        if (c.last() < ki) {
+            ans[i] = a.last() + (ki - c.last())
+        } else {
+            val j = lowerBound(c, ki)
+            ans[i] = (a[j] - 1) - (c[j] - ki)
+        }
     }
     return ans.joinToString("\n")
 }
