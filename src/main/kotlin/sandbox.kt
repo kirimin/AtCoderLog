@@ -1,8 +1,6 @@
-import abc.mod
-import utilities.MathSample
-import utilities.ModInt
 import utilities.debugLog
 
 fun main() {
-    debugLog(576460752303423488 + 1)
+    val list = listOf(10, 10, 10, 10, 10)
+    debugLog(list.binarySearch(10))
 }
