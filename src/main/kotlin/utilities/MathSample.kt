@@ -365,9 +365,6 @@ object MathSample {
     /**
      * 公差1の等差数列の和
      */
-    /**
-     * 公差1の等差数列の和
-     */
     fun arithmeticSequence(start: Long, end: Long): Long {
         return (start + end) * (end - start + 1) / 2
     }
