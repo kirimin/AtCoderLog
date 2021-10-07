@@ -1,5 +1,6 @@
 package abc
 
+import utilities.debugLog
 import java.util.*
 
 fun main(args: Array<String>) {
@@ -9,10 +10,17 @@ fun main(args: Array<String>) {
     println(problem220d(n, a))
 }
 
-fun problem220d(n: Int, a: List<Int>): Int {
-    val ans = IntArray(9)
-    fun func(a: List<Int>, isF: Boolean) {
+fun problem220d(n: Int, a: List<Int>): String {
+    val mod = 998244353
 
+    val dp = Array(n + 1) { LongArray(10) }
+    dp[0][a[0]] = 1
+    for (i in 0 until n - 1) {
+        for (j in 0 until 10) {
+            dp[i + 1][(j + a[i + 1]) % 10] += dp[i][j] % mod
+            dp[i + 1][(j * a[i + 1]) % 10] += dp[i][j] % mod
+        }
     }
-    return 0
+
+    return dp[n - 1].map { it % mod }.joinToString("\n")
 }
