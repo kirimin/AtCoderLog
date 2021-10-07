@@ -1,16 +1,16 @@
 package past
 
-import utilities.debugCount
-import utilities.debugLog
 import java.util.*
 
 fun main(args: Array<String>) {
     val sc = Scanner(System.`in`)
-    val n = sc.nextInt()
-    val a = (0 until n).map { sc.next().toInt() }
-    println(problem008a())
+    val a = sc.nextInt()
+    val b = sc.nextInt()
+    val c = sc.nextInt()
+    val d = sc.nextInt()
+    println(problem008a(a, b, c, d))
 }
 
-fun problem008a(): Int {
-    return 0
+fun problem008a(a: Int, b: Int, c: Int, d: Int): Int {
+    return Math.min(a + b - c, d)
 }
