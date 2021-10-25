@@ -362,4 +362,41 @@ object MathSample {
     fun arithmeticSequence(start: Long, end: Long): Long {
         return (start + end) * (end - start + 1) / 2
     }
+
+    /**
+     * 10進数未満を10進数に変換
+     * @param n 値
+     * @param b 元の進数
+     */
+    fun toBase10(n: String, b: Int): Long {
+        var ten = 0L
+        for (i in 0 until n.length) {
+            fun longPow(a: Long, b: Long): Long {
+                var ans = 1L
+                for (i in 0 until b) {
+                    ans *= a
+                }
+                return ans
+            }
+            ten += n[n.length - i - 1].toString().toLong() * (longPow(b.toLong(), i.toLong()))
+        }
+        return ten
+    }
+
+    /**
+     * 10進数を１０進数未満に変換
+     * @param n 値
+     * @param b 変換後の進数
+     */
+    fun base10to(n: Long, b: Int): String {
+        if (n == 0L) return "0"
+        var n = n
+        var num = ""
+        while (n != 0L) {
+            val mod = n % b
+            num = mod.toString() + num
+            n /= b
+        }
+        return num
+    }
 }
