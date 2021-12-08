@@ -2,24 +2,18 @@ import utilities.debugLog
 import java.util.*
 
 fun main() {
-    val sc = Scanner(System.`in`)
-    val a = sc.nextInt()
-    val b = sc.nextInt()
-    val c = sc.nextInt()
-    val x = sc.nextInt()
-    val y = sc.nextInt()
+    val N = 1048576L
+    val a = hashMapOf<Long, Long>()
+    val ans = mutableListOf<Long>()
 
-    if (a + b <= c * 2) {
-        println(a * x + b * y)
-        return
+    val samples = longArrayOf(1048537, 1, 2097153)
+    for (xi in samples) {
+        var h = xi
+        debugLog(xi, h, h % N, (a[h % N] ?: -1))
+        while ((a[h % N] ?: -1) != -1L) {
+            h++
+            debugLog(xi, h, h % N, (a[h % N] ?: -1))
+        }
+        a[h % N] = xi
     }
-    val min = Math.min(x, y)
-    var value = min * c * 2
-    val diff = Math.abs(x - y)
-    if (x > y) {
-        value += Math.min(diff * a, diff * c * 2)
-    } else {
-        value += Math.min(diff * b, diff * c * 2)
-    }
-    println(value)
 }
