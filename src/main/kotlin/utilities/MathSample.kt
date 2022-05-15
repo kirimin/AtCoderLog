@@ -178,15 +178,19 @@ object MathSample {
      * エラトステネスのふるい。1からnまでの素数を列挙する
      */
     fun sieveOfEratosthenes(n: Int): List<Int> {
-        val primes = (2..n).toMutableList()
+        val prime = BooleanArray(n + 1) { true }
         for (i in 2..n) {
-            if (isPrime(i)) {
-                for (j in i * 2..n step i) {
-                    primes.remove(j)
-                }
+            for (j in i * 2..n step i) {
+                prime[j] = false
             }
         }
-        return primes
+        val ans = mutableListOf<Int>()
+        for (i in 2..n) {
+            if (prime[i]) {
+                ans.add(i)
+            }
+        }
+        return ans
     }
 
     /**
