@@ -35,6 +35,7 @@ object MathSample {
             small = a
             big = b
         }
+        if (small == 0L) return big
         val rest = big % small
         return if (rest == 0L) small else computeGreatestCommonDivisor(small, rest)
     }
@@ -361,10 +362,12 @@ object MathSample {
     }
 
     /**
-     * 公差1の等差数列の和
+     * n以下の等差数列の和
+     * @param n 上限の数
+     * @param d 公差
      */
-    fun arithmeticSequence(start: Long, end: Long): Long {
-        return (start + end) * (end - start + 1) / 2
+    fun arithmeticSequence(n: Long, d: Long): Long {
+        return (d + n - n % d) * (n / d) / 2
     }
 
     /**
