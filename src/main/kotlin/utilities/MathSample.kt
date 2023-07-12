@@ -3,6 +3,7 @@ package utilities
 import java.math.BigDecimal
 import java.math.MathContext
 import java.util.*
+import kotlin.math.pow
 
 object MathSample {
 
@@ -405,5 +406,10 @@ object MathSample {
             n /= b
         }
         return num
+    }
+
+    // ユークリッド距離を求める
+    fun euclidDistance(x1: Int, y1: Int, x2: Int, y2: Int): Double {
+        return Math.sqrt((x1 - x2).toDouble().pow(2) + (y1 - y2).toDouble().pow(2))
     }
 }
