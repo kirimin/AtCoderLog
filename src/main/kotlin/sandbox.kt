@@ -2,18 +2,21 @@ import utilities.debugLog
 import java.util.*
 
 fun main() {
-    val N = 1048576L
-    val a = hashMapOf<Long, Long>()
-    val ans = mutableListOf<Long>()
-
-    val samples = longArrayOf(1048537, 1, 2097153)
-    for (xi in samples) {
-        var h = xi
-        debugLog(xi, h, h % N, (a[h % N] ?: -1))
-        while ((a[h % N] ?: -1) != -1L) {
-            h++
-            debugLog(xi, h, h % N, (a[h % N] ?: -1))
+    /**
+     * 最大公約数
+     */
+    fun computeGreatestCommonDivisor(a: Long, b: Long): Long {
+        val big: Long
+        val small: Long
+        if (a > b) {
+            big = a
+            small = b
+        } else {
+            small = a
+            big = b
         }
-        a[h % N] = xi
+        val rest = big % small
+        return if (rest == 0L) small else computeGreatestCommonDivisor(small, rest)
     }
+    println(computeGreatestCommonDivisor(6, 36))
 }

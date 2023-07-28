@@ -24,25 +24,22 @@ fun problem226d(n: Int, xy: List<Pair<Long, Long>>): Int {
             small = a
             big = b
         }
+        if (small == 0L) return big
         val rest = big % small
         return if (rest == 0L) small else computeGreatestCommonDivisor(small, rest)
     }
 
-    val list = mutableSetOf<Pair<Long, Long>>()
+    val set = mutableSetOf<Pair<Long, Long>>()
     for (i in 0 until n) {
-        val xyi = xy[i]
         for (j in 0 until n) {
-
+            if (i == j) continue
+            val xyi = xy[i]
             val xyj = xy[j]
-            val xDiff = xyi.first - xyj.first
-            val yDiff = xyi.second -xyj.second
-            if (xDiff == 0L || yDiff == 0L) {
-                list.add(Math.min(Math.abs(xDiff), 1L) to Math.min(Math.abs(yDiff), 1L))
-            } else {
-                val tmp = computeGreatestCommonDivisor(Math.abs(xDiff), Math.abs(yDiff))
-                list.add(Math.abs(xDiff) / tmp to Math.abs(yDiff) / tmp)
-            }
+            val xd = xyj.first - xyi.first
+            val yd = xyj.second - xyi.second
+            val g = computeGreatestCommonDivisor(Math.abs(xd), Math.abs(yd))
+            set.add(xd / g to yd / g)
         }
     }
-    return list.count() * 2
+    return set.count()
 }
