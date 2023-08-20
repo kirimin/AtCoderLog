@@ -29,7 +29,7 @@ fun problem011c(n: Long, m: Int): String {
             str += "x"
             continue
         }
-        val pow = Math.pow(n.toDouble(), i.toDouble())
+        val pow = Math.pow(n.toDouble(), i.toDouble()).toLong()
         if (pow in 1..num) {
             str += "o"
         } else {

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/AtCoderLogs.iml" filepath="$PROJECT_DIR$/.idea/AtCoderLogs.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/me.kirimin.atcoderlogs.iml" filepath="$PROJECT_DIR$/.idea/modules/me.kirimin.atcoderlogs.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/me.kirimin.atcoderlogs.main.iml" filepath="$PROJECT_DIR$/.idea/modules/me.kirimin.atcoderlogs.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/me.kirimin.atcoderlogs.test.iml" filepath="$PROJECT_DIR$/.idea/modules/me.kirimin.atcoderlogs.test.iml" />

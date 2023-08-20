@@ -6,7 +6,7 @@ fun main(args: Array<String>) {
     val sc = Scanner(System.`in`)
     val n = sc.nextInt()
     val m = sc.nextInt()
-    val abcd = (0 until m).map { arrayOf(sc.next().toInt(), sc.next(), sc.next().toInt(), sc.next()) }
+    val abcd = (0 until m).map { arrayOf<Any>(sc.next().toInt(), sc.next(), sc.next().toInt(), sc.next()) }
     println(problem293d(n, m, abcd))
 }
 
